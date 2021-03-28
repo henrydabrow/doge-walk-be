@@ -23,6 +23,11 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt'
 # Use rack-cors in development
 gem "rack-cors"
+# Use grape for API
+gem "grape"
+# Use JSONAPI-serializer for JSON serialization in Grape
+gem 'jsonapi-serializer'
+
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
