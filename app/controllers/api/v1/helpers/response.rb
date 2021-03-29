@@ -9,6 +9,11 @@ module API
           body
         end
 
+        def created(body = {}, options = {})
+          status :created
+          body
+        end
+
         def bad_request(errors = [])
           status :bad_request
           { errors: [errors].flatten }

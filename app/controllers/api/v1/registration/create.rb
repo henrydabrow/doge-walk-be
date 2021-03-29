@@ -5,11 +5,21 @@ module API
     module Registration
       class Create < Base
         params do
-          requires :code, type: String
+          requires :email,                 type: String
+          requires :password,              type: String
+          requires :passwordConfirmation, type: String
         end
 
+        desc "Creates new user"
+
         post do
-          p "sdafsdfaasd XDXDXDX"
+          user = User.create!(
+            email: params["email"],
+            password: params["password"],
+            password_confirmation: params["passwordConfirmation"]
+          )
+
+          created
         end
       end
     end
