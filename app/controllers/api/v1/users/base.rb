@@ -2,9 +2,9 @@
 
 module API
   module V1
-    module Registration
+    module Users
       class Base < API::V1::Base
-        namespace :registration do
+        namespace :users do
           mount Create
         end
       end

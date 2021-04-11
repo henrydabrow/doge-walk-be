@@ -2,12 +2,12 @@
 
 module API
   module V1
-    module Registration
+    module Users
       class Create < Base
         params do
           requires :email,                 type: String
           requires :password,              type: String
-          requires :passwordConfirmation, type: String
+          requires :passwordConfirmation,  type: String
         end
 
         desc "Creates new user"
