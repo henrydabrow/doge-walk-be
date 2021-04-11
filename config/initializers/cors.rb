@@ -2,7 +2,9 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # TO_DO Change it to fe url
     origins "*"
-    resource "*", headers: :any, metohds: %i[get post put patch delete options head],
+    resource "*",
+      headers: :any,
+      metohds: %i[get post put patch delete options head],
       credentials: false
   end
 

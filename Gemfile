@@ -23,6 +23,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt'
 # Use rack-cors in development
 gem "rack-cors"
+# Use jwt for token management
+gem "jwt"
 # Use grape for API
 gem "grape"
 # Use JSONAPI-serializer for JSON serialization in Grape
@@ -36,8 +38,8 @@ gem 'jsonapi-serializer'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
+  gem "pry-byebug"
 end
 
 group :development do

@@ -7,6 +7,7 @@ module API
       format :json
 
       helpers Helpers::Response
+      helpers Helpers::Auth
 
       rescue_from Grape::Exceptions::ValidationErrors do |e|
         error!({ errors: e.full_messages }, 400)
@@ -20,7 +21,7 @@ module API
         error!({ errors: e.record.errors.full_messages }, 400)
       end
 
-      mount Registration::Base
+      mount Users::Base
     end
   end
 end
