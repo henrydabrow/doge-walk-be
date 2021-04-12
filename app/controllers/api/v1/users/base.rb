@@ -6,6 +6,7 @@ module API
       class Base < API::V1::Base
         namespace :users do
           mount Create
+          mount Login
         end
       end
     end
