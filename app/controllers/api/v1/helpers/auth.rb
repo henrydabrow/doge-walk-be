@@ -13,12 +13,13 @@ module API
             token = auth_header.split(' ')[1]
 
             begin
-              JWT.decode(token, public_key, true, algorithm: 'RS256')
+              JWT.decode(token, public_key, true, algorithm: "RS256")
             rescue JWT::DecodeError
               nil
             end
           end
         end
+
         private
 
         # Generate private & public RSA keys
@@ -28,7 +29,7 @@ module API
         # end
 
         def private_key
-          ENV["JWT_PRIVATE_KEY"]
+          OpenSSL::PKey::RSA.new(ENV["JWT_PRIVATE_KEY"])
         end
 
         def public_key

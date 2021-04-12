@@ -40,6 +40,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
+  # Use RSpec as the testing framework
+  gem "rspec-rails"
+  # Use dotenv for env variables
+  gem 'dotenv-rails'
 end
 
 group :development do
