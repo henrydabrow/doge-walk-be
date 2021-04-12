@@ -42,6 +42,8 @@ group :development, :test do
   gem "pry-byebug"
   # Use RSpec as the testing framework
   gem "rspec-rails"
+  # Use dotenv for env variables
+  gem 'dotenv-rails'
 end
 
 group :development do
