@@ -1,5 +1,5 @@
 {
-  "name": "multi_box_be",
+  "name": "jeety_be",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
