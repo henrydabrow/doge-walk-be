@@ -8,36 +8,32 @@ module API
           JWT.encode(payload, private_key, "RS256")
         end
 
-        def decoded_token(request)
-          if auth_header
-            token = auth_header.split(' ')[1]
+        def verify_token!
+          return unauthorized! unless auth_token
 
-            begin
-              JWT.decode(token, public_key, true, algorithm: "RS256")
-            rescue JWT::DecodeError
-              nil
-            end
+          begin
+            JWT.decode(auth_token, public_key, true, algorithm: "RS256")
+          rescue JWT::DecodeError
+            unauthorized!
           end
         end
 
         private
-
-        # Generate private & public RSA keys
-        # def generate_rsa_keys
-        #   rsa_private = OpenSSL::PKey::RSA.generate(2048)
-        #   rsa_public = rsa_private.public_key
-        # end
 
         def private_key
           OpenSSL::PKey::RSA.new(ENV["JWT_PRIVATE_KEY"])
         end
 
         def public_key
-          ENV["JWT_PUBLIC_KEY"]
+          OpenSSL::PKey::RSA.new(ENV["JWT_PUBLIC_KEY"])
         end
 
-        def auth_header
-          request.headers['Authorization']
+        def auth_token
+          headers['Authorization'].split("Bearer:").last
+        end
+
+        def unauthorized!
+          error!({ errors: ["Unauthorized"] }, 401)
         end
       end
     end
