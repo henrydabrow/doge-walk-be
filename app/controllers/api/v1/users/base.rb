@@ -7,6 +7,12 @@ module API
         namespace :users do
           mount Create
           mount Login
+
+          scope do
+            before { verify_token! }
+
+            mount Index
+          end
         end
       end
     end
