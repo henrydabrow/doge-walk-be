@@ -29,7 +29,7 @@ module API
         end
 
         def auth_token
-          headers['Authorization'].split("Bearer:").last
+          headers["Authorization"]&.split("Bearer:")&.last
         end
 
         def unauthorized!
