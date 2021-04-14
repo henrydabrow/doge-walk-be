@@ -6,8 +6,13 @@ module API
       class Index < Base
         desc "Shows all users"
 
-        get :index do
-          user = User.all
+        params do
+          optional :page,     type: Integer
+          optional :per_page, type: Integer
+        end
+
+        get do
+          render_paginated User
         end
       end
     end
