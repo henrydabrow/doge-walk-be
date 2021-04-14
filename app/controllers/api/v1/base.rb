@@ -6,8 +6,17 @@ module API
       version "v1", using: :path
       format :json
 
-      helpers Helpers::Response
+      formatter :json, Grape::Formatter::ActiveModelSerializers
+
       helpers Helpers::Auth
+      helpers Helpers::Pagination
+      helpers Helpers::Response
+
+      helpers do
+        def default_serializer_options
+          { root: "data" }
+        end
+      end
 
       rescue_from Grape::Exceptions::ValidationErrors do |e|
         error!({ errors: e.full_messages }, 400)

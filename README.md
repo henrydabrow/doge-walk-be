@@ -19,3 +19,9 @@ curl --header "Content-Type: application/json" \
      --header "Authorization Bearer:token"
      --request GET \
      http://localhost:4000/api/v1/users/resources
+
+# Get Users (paginated)
+curl -X GET \
+     -H "Content-Type: application/json"
+     -H "Authorization: Bearer:token"
+     http://localhost:4000/api/v1/users\?page\=9\&per_page\=4
