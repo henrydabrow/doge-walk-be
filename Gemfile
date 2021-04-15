@@ -33,10 +33,12 @@ gem "bootsnap", ">= 1.4.2", require: false
 group :development, :test do
   # Call "binding.pry" anywhere in the code to stop execution and get a debugger console
   gem "pry-byebug"
-  # Use RSpec as the testing framework
-  gem "rspec-rails"
   # Use dotenv for env variables
   gem "dotenv-rails"
+  # Use factory_bot for writing fixtures
+  gem "factory_bot_rails"
+  # Use faker to generate better lookin test data
+  gem "faker"
 end
 
 group :development do
@@ -49,6 +51,8 @@ group :development do
 end
 
 group :test do
+  # Use RSpec as the testing framework
+  gem "rspec-rails"
   # Use shoulda-matchers for testing common Rails functionality
   gem "shoulda-matchers"
 end
