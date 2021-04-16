@@ -15,6 +15,8 @@ module API
             JWT.decode(auth_token, public_key, true, algorithm: "RS256")
           rescue JWT::DecodeError
             unauthorized!
+          rescue JWT::ExpiredSignature
+            token_expired!
           end
         end
 
@@ -34,6 +36,10 @@ module API
 
         def unauthorized!
           error!({ errors: ["Unauthorized"] }, 401)
+        end
+
+        def token_expired!
+          error!({ errors: ["Expired token"] }, 401)
         end
       end
     end
