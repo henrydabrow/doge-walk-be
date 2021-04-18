@@ -26,7 +26,7 @@ module API
               per_page: records.limit_value,
               page_count: records.total_pages,
               total_count: records.total_count,
-            }
+            },
           }
         end
       end

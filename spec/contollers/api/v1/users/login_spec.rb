@@ -4,13 +4,13 @@ RSpec.describe API::V1::Users::Login, type: :request do
   describe "POST /users/login" do
     subject(:request) do
       post "/api/v1/users/login",
-      params: params
+           params: params
     end
 
     let(:params) do
       {
         email: email,
-        password: password
+        password: password,
       }
     end
 
@@ -35,7 +35,7 @@ RSpec.describe API::V1::Users::Login, type: :request do
 
         expected_response = {
           user_id: user.id,
-          exp: Integer
+          exp: Integer,
         }
 
         expect(decoded_token).to match(expected_response)

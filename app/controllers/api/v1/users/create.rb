@@ -19,13 +19,11 @@ module API
             password_confirmation: params["passwordConfirmation"]
           )
 
-          if user.valid?
-            token = generate_token(user_id: user.id)
-          end
+          token = generate_token(user_id: user.id) if user.valid?
 
           created({
             message: "Your account has been created!",
-            token: token
+            token: token,
           })
         end
       end
