@@ -4,12 +4,12 @@ module API
   module V1
     module Helpers
       module Response
-        def ok(body = {}, options = {})
+        def ok(body = {}, _options = {})
           status :ok
           body
         end
 
-        def created(body = {}, options = {})
+        def created(body = {}, _options = {})
           status :created
           body
         end

@@ -15,10 +15,10 @@ module API
 
           begin
             JWT.decode(auth_token, public_key, true, algorithm: "RS256")
-          rescue JWT::DecodeError
-            unauthorized!
           rescue JWT::ExpiredSignature
             token_expired!
+          rescue JWT::DecodeError
+            unauthorized!
           end
         end
 
@@ -50,7 +50,7 @@ module API
 
           payload.merge(
             {
-              exp: expiration_timestamp
+              exp: expiration_timestamp,
             }
           )
         end

@@ -1,0 +1,77 @@
+# This config extends the default rubocop configuration
+# https://github.com/rubocop-hq/rubocop/blob/master/config/default.yml
+
+AllCops:
+  # DisabledByDefault: true
+  NewCops: enable
+  DisplayStyleGuide: true
+  ExtraDetails: true
+  Exclude:
+    - config/**/*
+    - db/schema.rb
+    - bin/*
+  TargetRubyVersion: 2.7.1
+  SuggestExtensions: false
+
+Bundler/GemComment:
+  Enabled: true
+  IgnoredGems:
+    - rails
+
+Metrics/BlockLength:
+  Exclude:
+    - db/*
+    - spec/**/*
+
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - db/migrate/*
+  SafeAutoCorrect: true
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/LambdaCall:
+  EnforcedStyle: braces
+
+Layout/ClassStructure:
+  Enabled: true
+
+Layout/EndOfLine:
+  EnforcedStyle: lf
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/HashAlignment:
+  EnforcedHashRocketStyle:
+    - key
+    - table
+  EnforcedColonStyle:
+    - key
+    - table
+
+Layout/LineLength:
+  Max: 120
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - spec/**/*

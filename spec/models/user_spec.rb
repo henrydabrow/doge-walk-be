@@ -19,12 +19,15 @@ RSpec.describe User do
       it { is_expected.to validate_confirmation_of(:password) }
       it { is_expected.to validate_length_of(:password).is_at_least(8) }
       it { is_expected.to allow_values("Password1!").for(:password) }
-      it { is_expected.to_not allow_values(
-        "password1!",
-        "Password!",
-        "Password1",
-        "password1!").for(:password) }
       it { is_expected.to have_secure_password }
+      it do
+        is_expected.to_not allow_values(
+          "password1!",
+          "Password!",
+          "Password1",
+          "password1!"
+        ).for(:password)
+      end
     end
 
     describe "uniqueness" do
