@@ -12,7 +12,7 @@ module API
         desc "Loggs in a user"
 
         post :login do
-          user = User.find_by!(email: params["email"])
+          user = User.find_by(email: params["email"])
 
           if user && user.authenticate(params["password"])
             token = generate_token(user_id: user.id)
