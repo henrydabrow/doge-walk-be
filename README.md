@@ -5,7 +5,7 @@ This is simple Ruby Auth API
 curl --header "Content-Type: application/json" \
      --request POST \
      --data '{"email": "x1@x.x", "password": "Password1!", "passwordConfirmation": "Password1!"}' \
-     http://localhost:4000/api/v1/users/create
+     http://localhost:4000/api/v1/users
 
 
 # Login
