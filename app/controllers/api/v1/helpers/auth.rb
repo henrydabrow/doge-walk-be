@@ -4,6 +4,12 @@ module API
   module V1
     module Helpers
       module Auth
+        def current_user
+          user_id = decoded_token.fetch("user_id")
+
+          User.find(user_id)
+        end
+
         def generate_token(payload)
           payload_with_expiration = add_expiration(payload)
 
@@ -14,7 +20,7 @@ module API
           return unauthorized! unless auth_token
 
           begin
-            JWT.decode(auth_token, public_key, true, algorithm: "RS256")
+            decoded_token
           rescue JWT::ExpiredSignature
             token_expired!
           rescue JWT::DecodeError
@@ -53,6 +59,10 @@ module API
               exp: expiration_timestamp,
             }
           )
+        end
+
+        def decoded_token
+          JWT.decode(auth_token, public_key, true, algorithm: "RS256").first
         end
       end
     end
