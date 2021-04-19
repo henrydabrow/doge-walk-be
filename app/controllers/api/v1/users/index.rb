@@ -11,7 +11,7 @@ module API
           optional :per_page, type: Integer
         end
 
-        get do
+        get each_serializer: UserLightSerializer do
           render_paginated User
         end
       end
