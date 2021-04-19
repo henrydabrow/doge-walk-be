@@ -12,6 +12,7 @@ module API
             before { verify_token! }
 
             mount Index
+            mount Me
           end
         end
       end
