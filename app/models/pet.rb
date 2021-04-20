@@ -1,0 +1,13 @@
+# frozen_string_literal: true
+
+class Pet < ApplicationRecord
+  belongs_to :owner, class_name: "User", foreign_key: :user_id
+
+  validates_presence_of :name
+  validates_presence_of :kind
+
+  enum kind: {
+    cat: 0,
+    dog: 1
+  }
+end
