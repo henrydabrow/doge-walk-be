@@ -36,4 +36,8 @@ RSpec.describe User do
       it { is_expected.to validate_uniqueness_of(:email) }
     end
   end
+
+  describe "associations" do
+    it { is_expected.to have_many(:pets) }
+  end
 end
