@@ -59,7 +59,7 @@ RSpec.describe API::V1::Users::Create, type: :request do
         end
 
         it "creates new User" do
-          expect { request }.to change { User.count}.by(1)
+          expect { request }.to change { User.count }.by(1)
         end
       end
     end

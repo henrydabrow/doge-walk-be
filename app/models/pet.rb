@@ -8,6 +8,6 @@ class Pet < ApplicationRecord
 
   enum kind: {
     cat: 0,
-    dog: 1
+    dog: 1,
   }
 end

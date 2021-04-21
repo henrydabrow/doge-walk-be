@@ -9,6 +9,7 @@ module API
             before { verify_token! }
 
             mount Create
+            mount Index
           end
         end
       end

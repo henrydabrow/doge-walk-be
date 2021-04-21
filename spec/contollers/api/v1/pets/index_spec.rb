@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-RSpec.describe API::V1::Users::Index, type: :request do
-  describe "GET /users" do
-    let!(:user) { create(:user) }
+RSpec.describe API::V1::Pets::Index, type: :request do
+  describe "GET /pets" do
+    let!(:pet)  { create(:pet) }
+    let!(:user) { pet.owner }
 
     let(:payload)     { { user_id: user.id, exp: exp } }
     let(:private_key) { OpenSSL::PKey::RSA.new(ENV["JWT_PRIVATE_KEY"]) }
@@ -11,18 +12,26 @@ RSpec.describe API::V1::Users::Index, type: :request do
     let(:headers) { { "Authorization" => "Bearer:#{jwt_token}" } }
 
     context "when JWT is correct (validity will expire in 2 hours)" do
-      subject(:request) { get "/api/v1/users", headers: headers }
+      subject(:request) { get "/api/v1/pets", headers: headers }
 
       let(:exp)             { (Time.now + 2.hours).to_i }
-      let(:parsed_response) { JSON.parse(response.body).fetch("data").first.symbolize_keys }
+      let(:parsed_response) { JSON.parse(response.body).fetch("data").first.deep_symbolize_keys }
       let(:expected_response) do
         {
-          id: user.id,
-          first_name: user.first_name,
+          id: pet.id,
+          name: pet.name,
+          kind: pet.kind,
+          breed: pet.breed,
+          birthdate: pet.birthdate,
+          description: pet.description,
+          owner: {
+            id: user.id,
+            first_name: user.first_name,
+          },
         }
       end
 
-      it "returns serialized users" do
+      it "returns serialized pets" do
         request
 
         expect(parsed_response).to match(expected_response)
@@ -36,7 +45,7 @@ RSpec.describe API::V1::Users::Index, type: :request do
     end
 
     context "when JWT expired (validity expired 2 hours ago)" do
-      subject(:request) { get "/api/v1/users", headers: headers }
+      subject(:request) { get "/api/v1/pets", headers: headers }
 
       let(:exp) { (Time.now - 2.hours).to_i }
 
@@ -58,7 +67,7 @@ RSpec.describe API::V1::Users::Index, type: :request do
     end
 
     context "when JWT is invalid" do
-      subject(:request) { get "/api/v1/users", headers: headers }
+      subject(:request) { get "/api/v1/pets", headers: headers }
 
       let(:exp)               { nil }
       let(:jwt_token)         { "invalid_jwt_token" }
@@ -79,7 +88,7 @@ RSpec.describe API::V1::Users::Index, type: :request do
     end
 
     context "when request contain pagination details" do
-      subject(:request) { get "/api/v1/users", params: params, headers: headers }
+      subject(:request) { get "/api/v1/pets", params: params, headers: headers }
 
       let(:exp) { (Time.now + 2.hours).to_i }
       let(:params) do
@@ -101,7 +110,7 @@ RSpec.describe API::V1::Users::Index, type: :request do
       end
 
       before do
-        15.times { create(:user) }
+        15.times { create(:pet) }
       end
 
       it "returns correct pagination metadata" do

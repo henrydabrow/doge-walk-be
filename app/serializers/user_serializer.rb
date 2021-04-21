@@ -10,5 +10,4 @@ class UserSerializer < BaseSerializer
              :country,
              :postal_code,
              :gender
-
 end

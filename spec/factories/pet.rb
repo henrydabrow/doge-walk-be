@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :pet do
     name { Faker::Name.name }
-    kind { [:cat, :dog].sample }
+    kind { %i[cat dog].sample }
     owner { create(:user) }
   end
 end

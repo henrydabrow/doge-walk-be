@@ -6,7 +6,7 @@ module API
       class Create < Base
         params do
           requires :name,        type: String
-          requires :kind,        type: String, values: Pet.kinds.keys #[cat, dog]
+          requires :kind,        type: String, values: Pet.kinds.keys # [cat, dog]
           optional :breed,       type: String
           optional :birthdate,   type: Date
           optional :description, type: String
@@ -25,7 +25,7 @@ module API
           )
 
           created({
-            message: "Your #{params["kind"]}'s profile has been created!",
+            message: "Your #{params['kind']}'s profile has been created!",
             data: pet,
           })
         end

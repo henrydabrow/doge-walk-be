@@ -2,5 +2,5 @@
 
 class UserLightSerializer < BaseSerializer
   attribute :id, key: :id
-  attributes :email
+  attributes :first_name
 end
