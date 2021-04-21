@@ -31,6 +31,7 @@ module API
       end
 
       mount Users::Base
+      mount Pets::Base
     end
   end
 end
