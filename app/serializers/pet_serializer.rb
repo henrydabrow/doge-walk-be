@@ -9,5 +9,4 @@ class PetSerializer < BaseSerializer
              :description
 
   belongs_to :owner, serializer: UserLightSerializer
-
 end
