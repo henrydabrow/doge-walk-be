@@ -18,7 +18,7 @@ RSpec.describe API::V1::Users::Index, type: :request do
       let(:expected_response) do
         {
           id: user.id,
-          email: user.email,
+          first_name: user.first_name,
         }
       end
 
