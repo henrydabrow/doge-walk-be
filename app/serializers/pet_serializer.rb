@@ -8,4 +8,6 @@ class PetSerializer < BaseSerializer
              :birthdate,
              :description
 
+  belongs_to :owner
+
 end
