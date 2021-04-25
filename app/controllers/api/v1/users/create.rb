@@ -5,9 +5,9 @@ module API
     module Users
       class Create < Base
         params do
-          requires :email,                type: String
-          requires :password,             type: String
-          requires :passwordConfirmation, type: String
+          requires :email,                type: String, allow_blank: false
+          requires :password,             type: String, allow_blank: false
+          requires :passwordConfirmation, type: String, allow_blank: false
           optional :firstName,            type: String
           optional :lastName,             type: String
           optional :city,                 type: String
