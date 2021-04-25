@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   validates :password,
             length: { minimum: 8 },
-            format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)[A-Za-z\d\W]{8,}\z/ },
+            format: { with: /\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)[A-Za-z\d\W]{8,}\z/,
+                      message: "must contain capital letter, number and special character" },
             allow_blank: true
 end

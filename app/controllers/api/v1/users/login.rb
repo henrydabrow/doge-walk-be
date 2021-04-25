@@ -5,8 +5,8 @@ module API
     module Users
       class Login < Base
         params do
-          requires :email,    type: String
-          requires :password, type: String
+          requires :email,    type: String, allow_blank: false
+          requires :password, type: String, allow_blank: false
         end
 
         desc "Loggs in a user"
