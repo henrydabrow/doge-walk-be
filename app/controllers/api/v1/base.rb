@@ -12,12 +12,6 @@ module API
       helpers Helpers::Pagination
       helpers Helpers::Response
 
-      helpers do
-        def default_serializer_options
-          { root: "data" }
-        end
-      end
-
       rescue_from Grape::Exceptions::ValidationErrors do |e|
         error!({ errors: e.full_messages }, 400)
       end
