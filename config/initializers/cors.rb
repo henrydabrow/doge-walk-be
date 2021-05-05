@@ -3,11 +3,11 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     # TO_DO Change it to fe url
-    origins '*'
+    origins 'http://localhost:3000'
     resource '*',
     headers: :any,
     methods: :any,
-    credentials: false
+    credentials: true
   end
 
   # TO_DO This is placeholder for production environment
