@@ -16,13 +16,20 @@ module API
 
           if user&.authenticate(params["password"])
             token = generate_token(user_id: user.id)
+            cookies[:jid] = {
+              value: "refreshToken",
+              http_only: true,
+              secure: true,
+              expires: Time.now + 36000,
+              same_site: :none
+            }
 
             ok({
               message: "You are logged in!",
               token: token,
             })
           else
-            unauthorized
+            unauthorized "Invalid credentials"
           end
         end
       end
