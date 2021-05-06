@@ -31,7 +31,16 @@ module API
             gender: params["gender"]
           )
 
-          token = generate_token(user_id: user.id) if user.valid?
+          if user.valid?
+            token = generate_token(user_id: user.id)
+            cookies[:jid] = {
+              value: "refreshToken",
+              http_only: true,
+              secure: true,
+              expires: Time.now + 36000,
+              same_site: :none
+            }
+          end
 
           created({
             message: "Your account has been created!",
