@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_192227) do
+ActiveRecord::Schema.define(version: 2021_05_07_213802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2021_04_20_192227) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_pets_on_user_id"
+  end
+
+  create_table "refresh_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "crypted_token", null: false
+    t.bigint "version"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_refresh_tokens_on_user_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -44,4 +53,5 @@ ActiveRecord::Schema.define(version: 2021_04_20_192227) do
   end
 
   add_foreign_key "pets", "users"
+  add_foreign_key "refresh_tokens", "users"
 end
