@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_07_213802) do
+ActiveRecord::Schema.define(version: 2021_05_08_170311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -30,7 +30,8 @@ ActiveRecord::Schema.define(version: 2021_05_07_213802) do
 
   create_table "refresh_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "crypted_token", null: false
-    t.bigint "version"
+    t.string "token", null: false
+    t.bigint "version", default: 0
     t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -49,6 +50,7 @@ ActiveRecord::Schema.define(version: 2021_05_07_213802) do
     t.string "country"
     t.string "postal_code"
     t.string "gender"
+    t.bigint "token_version", default: 0
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
