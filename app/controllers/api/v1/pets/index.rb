@@ -12,7 +12,6 @@ module API
         end
 
         get do
-          # binding.pry
           render_paginated Pet
         end
       end
