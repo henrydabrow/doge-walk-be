@@ -40,13 +40,15 @@ module API
             decoded_token(auth_token)
           rescue JWT::ExpiredSignature
             p 'Token expired!'
-            if decoded_token(refresh_token)
+            begin
               user_id = decoded_token(refresh_token).fetch("user_id")
               p 'Refresh JWT from Refresh token'
               generate_token(user_id: user_id)
-            else
+            rescue JWT::ExpiredSignature
               p 'REFRESH also token expired!'
               token_expired!
+            rescue JWT::DecodeError
+              unauthorized!
             end
           rescue JWT::DecodeError
             unauthorized!
@@ -59,6 +61,7 @@ module API
 
           begin
             decoded_token(refresh_token)
+            p 'REFRESH token refreshed!'
           rescue JWT::ExpiredSignature
             p 'REFRESH token expired!'
             token_expired!
