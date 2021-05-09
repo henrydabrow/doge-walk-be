@@ -2,7 +2,7 @@
 
 module API
   module V1
-    module Users
+    module Auth
       class Login < Base
         params do
           requires :email,    type: String, allow_blank: false
@@ -16,13 +16,7 @@ module API
 
           if user&.authenticate(params["password"])
             token = generate_token(user_id: user.id)
-            cookies[:jid] = {
-              value: "refreshToken",
-              http_only: true,
-              secure: true,
-              expires: Time.now + 36000,
-              same_site: :none
-            }
+            cookies[:jid] = set_cookie('/', user.id)
 
             ok({
               message: "You are logged in!",

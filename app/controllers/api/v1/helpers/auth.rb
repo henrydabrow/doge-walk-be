@@ -5,7 +5,8 @@ module API
     module Helpers
       module Auth
         def current_user
-          user_id = decoded_token.fetch("user_id")
+          user_id = decoded_token(refresh_token).fetch("user_id") if refresh_token
+          user_id = decoded_token(auth_token).fetch("user_id") if auth_token
 
           User.find(user_id)
         end
@@ -13,15 +14,56 @@ module API
         def generate_token(payload)
           payload_with_expiration = add_expiration(payload)
 
-          JWT.encode(payload_with_expiration, private_key, "RS256")
+          t = JWT.encode(payload_with_expiration, private_key, "RS256")
+          p "JWT: ", decoded_token(t)
+          t
+        end
+
+        def set_cookie(path, user_id)
+          rjwt = JWT.encode({ user_id: user_id, exp: (Time.now + 30.seconds).to_i }, private_key, "RS256")
+          p "RJWT: ", decoded_token(rjwt)
+          {
+            value: rjwt,
+            http_only: true,
+            secure: true,
+            expires: Time.now + 36000,
+            same_site: :none,
+            path: path
+          }
         end
 
         def verify_token!
+          p 'Verify token!'
           return unauthorized! unless auth_token
 
           begin
-            decoded_token
+            decoded_token(auth_token)
           rescue JWT::ExpiredSignature
+            p 'Token expired!'
+            begin
+              user_id = decoded_token(refresh_token).fetch("user_id")
+              p 'Refresh JWT from Refresh token'
+              generate_token(user_id: user_id)
+            rescue JWT::ExpiredSignature
+              p 'REFRESH also token expired!'
+              token_expired!
+            rescue JWT::DecodeError
+              unauthorized!
+            end
+          rescue JWT::DecodeError
+            unauthorized!
+          end
+        end
+
+        def verify_refresh_token!
+          p 'Verify REFRESH token!'
+          return unauthorized! unless refresh_token
+
+          begin
+            decoded_token(refresh_token)
+            p 'REFRESH token refreshed!'
+          rescue JWT::ExpiredSignature
+            p 'REFRESH token expired!'
             token_expired!
           rescue JWT::DecodeError
             unauthorized!
@@ -29,6 +71,22 @@ module API
         end
 
         private
+
+        def add_expiration(payload)
+          # jwt_validity_in_hours = ENV["JWT_VALIDITY_IN_HOURS"].to_i
+          # expiration_timestamp  = (Time.now + jwt_validity_in_hours.hours).to_i
+          expiration_timestamp  = (Time.now + 10.seconds).to_i
+
+          payload.merge(
+            {
+              exp: expiration_timestamp,
+            }
+          )
+        end
+
+        def decoded_token(token)
+          JWT.decode(token, public_key, true, algorithm: "RS256").first
+        end
 
         def private_key
           OpenSSL::PKey::RSA.new(ENV["JWT_PRIVATE_KEY"])
@@ -42,27 +100,16 @@ module API
           headers["Authorization"]&.split("Bearer:")&.last
         end
 
+        def refresh_token
+          cookies["jid"]
+        end
+
         def unauthorized!
           error!({ errors: ["Unauthorized"] }, 401)
         end
 
         def token_expired!
           error!({ errors: ["Expired token"] }, 401)
-        end
-
-        def add_expiration(payload)
-          jwt_validity_in_hours = ENV["JWT_VALIDITY_IN_HOURS"].to_i
-          expiration_timestamp  = (Time.now + jwt_validity_in_hours.hours).to_i
-
-          payload.merge(
-            {
-              exp: expiration_timestamp,
-            }
-          )
-        end
-
-        def decoded_token
-          JWT.decode(auth_token, public_key, true, algorithm: "RS256").first
         end
       end
     end

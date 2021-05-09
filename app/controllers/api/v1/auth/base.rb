@@ -2,16 +2,15 @@
 
 module API
   module V1
-    module Users
+    module Auth
       class Base < API::V1::Base
-        namespace :users do
-          mount Create
+        namespace :auth do
+          mount Login
 
           scope do
-            before { verify_token! }
+            before { verify_refresh_token! }
 
-            mount Index
-            mount Me
+            mount Refresh
           end
         end
       end
