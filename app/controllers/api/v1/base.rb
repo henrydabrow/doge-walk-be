@@ -24,8 +24,9 @@ module API
         error!({ errors: e.record.errors.full_messages }, 400)
       end
 
-      mount Users::Base
+      mount Auth::Base
       mount Pets::Base
+      mount Users::Base
     end
   end
 end
