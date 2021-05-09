@@ -16,7 +16,7 @@ module API
 
           if user&.authenticate(params["password"])
             token = generate_token(user_id: user.id)
-            cookies[:jid] = set_cookie('/')
+            cookies[:jid] = set_cookie('/', user.id)
 
             ok({
               message: "You are logged in!",

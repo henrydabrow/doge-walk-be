@@ -33,13 +33,7 @@ module API
 
           if user.valid?
             token = generate_token(user_id: user.id)
-            cookies[:jid] = {
-              value: "refreshToken",
-              http_only: true,
-              secure: true,
-              expires: Time.now + 36000,
-              same_site: :none
-            }
+            cookies[:jid] = set_cookie('/', user.id)
           end
 
           created({
