@@ -33,19 +33,19 @@ module API
         end
 
         def verify_token!
-          p 'Verify token!'
+          p 'Verify JWT token!'
           return unauthorized! unless auth_token
 
           begin
             decoded_token(auth_token)
           rescue JWT::ExpiredSignature
-            p 'Token expired!'
+            p 'JWT token expired!'
             begin
               user_id = decoded_token(refresh_token).fetch("user_id")
-              p 'Refresh JWT from Refresh token'
+              p 'Refresh JWT from REFRESH token'
               generate_token(user_id: user_id)
             rescue JWT::ExpiredSignature
-              p 'REFRESH also token expired!'
+              p 'REFRESH token also expired!'
               token_expired!
             rescue JWT::DecodeError
               unauthorized!
