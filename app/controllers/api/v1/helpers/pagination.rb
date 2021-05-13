@@ -4,7 +4,7 @@ module API
   module V1
     module Helpers
       module Pagination
-        ::DEFAULT_PAGE_SIZE = 10
+        ::DEFAULT_PAGE_SIZE = 9
 
         def render_paginated(records, options = {})
           paginated_records = paginate(records)
