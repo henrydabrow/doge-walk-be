@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_08_170311) do
+ActiveRecord::Schema.define(version: 2021_05_13_185658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_05_08_170311) do
   create_table "pets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name", null: false
     t.bigint "kind", null: false
-    t.bigint "breed"
+    t.string "breed"
     t.datetime "birthdate"
     t.text "description"
     t.uuid "user_id"
