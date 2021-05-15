@@ -10,6 +10,7 @@ module API
 
       helpers Helpers::Auth
       helpers Helpers::Pagination
+      helpers Helpers::Params
       helpers Helpers::Response
 
       rescue_from Grape::Exceptions::ValidationErrors do |e|
