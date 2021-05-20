@@ -20,7 +20,7 @@ module API
         end
 
         def set_cookie(path, user_id)
-          rjwt = JWT.encode({ user_id: user_id, exp: (Time.now + 30.seconds).to_i }, private_key, "RS256")
+          rjwt = JWT.encode({ user_id: user_id, exp: (Time.now + 600.seconds).to_i }, private_key, "RS256")
           p "RJWT: ", decoded_token(rjwt)
           {
             value: rjwt,
@@ -75,7 +75,7 @@ module API
         def add_expiration(payload)
           # jwt_validity_in_hours = ENV["JWT_VALIDITY_IN_HOURS"].to_i
           # expiration_timestamp  = (Time.now + jwt_validity_in_hours.hours).to_i
-          expiration_timestamp  = (Time.now + 10.seconds).to_i
+          expiration_timestamp  = (Time.now + 300.seconds).to_i
 
           payload.merge(
             {
@@ -85,7 +85,11 @@ module API
         end
 
         def decoded_token(token)
-          JWT.decode(token, public_key, true, algorithm: "RS256").first
+          begin
+            JWT.decode(token, public_key, true, algorithm: "RS256").first
+          rescue
+            unauthorized!
+          end
         end
 
         def private_key
