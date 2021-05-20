@@ -12,8 +12,6 @@ class PetSerializer < BaseSerializer
   belongs_to :owner, serializer: UserLightSerializer
 
   def image
-    p "xd"
-    binding.irb
     return unless object.image.attached?
 
     object.image.blob.attributes
